@@ -9,7 +9,7 @@ public class Plane extends PlaneBase {
 
         // If the two planes share the same time then compare by alphabetical order
         if (this.getTime().equals(o.getTime())) {
-            return this.getPlaneNumber().compareToIgnoreCase(o.getPlaneNumber());
+            return this.getPlaneNumber().substring(0, 3).compareTo(o.getPlaneNumber().substring(0,3));
         }
 
         // Otherwise if the two planes
