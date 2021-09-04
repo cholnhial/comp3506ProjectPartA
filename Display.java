@@ -22,7 +22,7 @@ class DisplayPartiallySorted extends DisplayPartiallySortedBase {
     Plane[] sort() {
         Plane[] partiallySorted = Utils.mergeArrays(super.getSchedule(), super.getExtraPlanes());
         Utils.insertionSort(partiallySorted, partiallySorted.length);
-        return super.getExtraPlanes();
+        return partiallySorted;
     }
 
 
