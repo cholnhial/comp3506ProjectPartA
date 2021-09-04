@@ -20,8 +20,8 @@ class DisplayPartiallySorted extends DisplayPartiallySortedBase {
 
     @Override
     Plane[] sort() {
-        Utils.insertionSort(super.getSchedule(), super.getSchedule().length);
-        return super.getSchedule();
+        Utils.insertionSort(super.getExtraPlanes(), super.getSchedule().length);
+        return super.getExtraPlanes();
     }
 
 
