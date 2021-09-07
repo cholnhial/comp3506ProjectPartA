@@ -2,3 +2,10 @@ AlgoTest.java
 out/
 ./.idea/
 *.iml
+/.idea/.gitignore
+/.idea/checkstyle-idea.xml
+/.idea/codeStyles
+/.idea/dbnavigator.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/vcs.xml
