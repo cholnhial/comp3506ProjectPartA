@@ -1,4 +1,3 @@
-import java.util.Arrays;
 
 public class Dispatcher extends DispatcherBase {
 
@@ -160,11 +159,11 @@ class PlanePriorityQueue {
         return size;
     }
 
-    /**
+ /*   *//**
      * Helper method for testing
      *
      * @return array of planes sorted
-     */
+     *//*
     @Override
     public String toString() {
         Plane[] result = new Plane[size];
@@ -177,7 +176,7 @@ class PlanePriorityQueue {
         }
 
         return Arrays.toString(result);
-    }
+    }*/
 
 
     static class PlaneLinkedListNode {
