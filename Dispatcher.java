@@ -16,11 +16,31 @@ public class Dispatcher extends DispatcherBase {
 
     @Override
     public String allocateLandingSlot(String currentTime) {
+        Plane plane = planePriorityQueue.min();
+        if (plane != null) {
+
+            int currentTimeMinutes = PlanePriorityQueue.getMinutesFromTime(currentTime);
+            int planeArrivalTime = PlanePriorityQueue.getMinutesFromTime(plane.getTime());
+            int minutesDiff = currentTimeMinutes - planeArrivalTime;
+
+            if (minutesDiff <= 5) {
+                Plane planeRemoved = planePriorityQueue.removeMinPlane();
+                if (planeRemoved != null) {
+                    return planeRemoved.getPlaneNumber();
+                }
+            }
+        }
+
         return null;
     }
 
     @Override
     public String emergencyLanding(String planeNumber) {
+        Plane plane = planePriorityQueue.removePlane(planeNumber);
+        if (plane != null) {
+            return plane.getPlaneNumber();
+        }
+
         return null;
     }
 
@@ -102,6 +122,7 @@ class PlanePriorityQueue {
         if (planeFound != null) {
             size--;
         }
+
         return planeFound;
     }
 
@@ -115,6 +136,24 @@ class PlanePriorityQueue {
         }
 
         return false;
+    }
+
+    public Plane removeMinPlane() {
+        if (head != null) {
+            Plane plane = head.plane;
+            head = head.next;
+            return plane;
+        }
+
+        return null;
+    }
+
+    Plane min() {
+        if (head != null) {
+            return head.plane;
+        }
+
+        return null;
     }
 
     public int getSize() {
@@ -160,5 +199,9 @@ class PlanePriorityQueue {
         public Plane getPlane() {
             return plane;
         }
+    }
+
+    public static int getMinutesFromTime(String time) {
+        return Integer.parseInt(time.substring(3)); // Runs O(2) -> O(1) size is fixed
     }
 }
