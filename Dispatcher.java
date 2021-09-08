@@ -18,11 +18,8 @@ public class Dispatcher extends DispatcherBase {
         Plane plane = planePriorityQueue.min();
         if (plane != null) {
 
-            int currentTimeMinutes = PlanePriorityQueue.getMinutesFromTime(currentTime);
-            int planeArrivalTime = PlanePriorityQueue.getMinutesFromTime(plane.getTime());
-            int minutesDiff = currentTimeMinutes - planeArrivalTime;
 
-            if (minutesDiff <= 5) {
+            if (PlanePriorityQueue.getTimeDifferenceInMinutes(plane.getTime(), currentTime) <= 5) {
                 Plane planeRemoved = planePriorityQueue.removeMinPlane();
                 if (planeRemoved != null) {
                     return planeRemoved.getPlaneNumber();
@@ -66,31 +63,22 @@ class PlanePriorityQueue {
         PlaneLinkedListNode newNode = new PlaneLinkedListNode(plane);
         newNode.next = null;
 
-        if (head == null) {
+        // If there's only one plane in the list and it has greater priority then put this
+        // new one behind
+        if (head == null || head.plane.compareTo(newNode.plane) >= 0) {
+            newNode.next = head;
             head = newNode;
         } else {
             PlaneLinkedListNode current = head;
-            PlaneLinkedListNode previous = null;
 
-            while(current != null) {
-                previous = current;
-
-                // Found place somewhere in the center
-                if (newNode.plane.compareTo(current.plane) <= 0 && current.next != null &&
-                        newNode.plane.compareTo(current.next.plane) <= 0) {
-                    PlaneLinkedListNode after = current.next;
-                    current.next = newNode;
-                    newNode.next = after;
-                    break;
-                }
-
+            /* We need to find where to insert the new node */
+            while (current.next != null && current.next.plane.compareTo(newNode.plane) < 0) {
                 current = current.next;
             }
 
-            // Not place found, put at the end
-            if (current == null) {
-                previous.next = newNode;
-            }
+            // Node has been found and we insert it in the link
+            newNode.next = current.next;
+            current.next = newNode;
         }
 
         size++;
@@ -159,12 +147,12 @@ class PlanePriorityQueue {
         return size;
     }
 
- /*   *//**
+   /**
      * Helper method for testing
      *
      * @return array of planes sorted
-     *//*
-    @Override
+     */
+    /*@Override
     public String toString() {
         Plane[] result = new Plane[size];
         PlaneLinkedListNode current = head;
@@ -202,5 +190,18 @@ class PlanePriorityQueue {
 
     public static int getMinutesFromTime(String time) {
         return Integer.parseInt(time.substring(3)); // Runs O(2) -> O(1) size is fixed
+    }
+
+    public static int getHourFromTime(String time) {
+        return Integer.parseInt(time.substring(0, 2));
+    }
+
+    public static int getTimeDifferenceInMinutes(String planeTime, String currentTime) {
+        int currentHour = PlanePriorityQueue.getHourFromTime(currentTime);
+        int currentTimeMinutes = PlanePriorityQueue.getMinutesFromTime(currentTime);
+        int planeArrivalMinutes = PlanePriorityQueue.getMinutesFromTime(planeTime);
+        int planeArrivalHour = PlanePriorityQueue.getHourFromTime(planeTime);
+
+        return Math.abs(currentHour - planeArrivalHour)*60+(Math.abs(planeArrivalMinutes-currentTimeMinutes));
     }
 }

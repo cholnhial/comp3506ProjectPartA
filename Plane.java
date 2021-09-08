@@ -9,14 +9,14 @@ public class Plane extends PlaneBase {
 
         // If the two planes share the same time then compare by alphabetical order
         if (this.getTime().equals(o.getTime())) {
-            return this.getPlaneNumber().substring(0, 3).compareTo(o.getPlaneNumber().substring(0,3));
+            return this.getPlaneNumber().compareTo(o.getPlaneNumber());
         }
 
         // Otherwise if the two planes
-        Integer otherPlaneTime = Integer.valueOf(o.getTime().replace(":", ""));
-        Integer thisPlaneTime = Integer.valueOf(this.getTime().replace(":", ""));
+        int otherPlaneTime = Integer.parseInt(o.getTime().replace(":", ""));
+        int thisPlaneTime = Integer.parseInt(this.getTime().replace(":", ""));
 
-        return thisPlaneTime.compareTo(otherPlaneTime);
+        return thisPlaneTime - otherPlaneTime;
     }
 
     /* Implement all the necessary methods of Plane here */
