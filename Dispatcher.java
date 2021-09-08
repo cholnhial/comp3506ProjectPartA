@@ -16,18 +16,11 @@ public class Dispatcher extends DispatcherBase {
     @Override
     public String allocateLandingSlot(String currentTime) {
         Plane plane = planePriorityQueue.min();
-        if (plane != null) {
-
-
-            if (PlanePriorityQueue.getTimeDifferenceInMinutes(plane.getTime(), currentTime) <= 5) {
-                Plane planeRemoved = planePriorityQueue.removeMinPlane();
-                if (planeRemoved != null) {
-                    return planeRemoved.getPlaneNumber();
-                }
-            }
+        if (plane == null || PlanePriorityQueue.getTimeDifferenceInMinutes(plane.getTime(), currentTime) > 5) {
+            return null;
         }
 
-        return null;
+        return planePriorityQueue.removeMinPlane().getPlaneNumber();
     }
 
     @Override
