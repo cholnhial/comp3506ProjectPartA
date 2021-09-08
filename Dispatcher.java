@@ -1,4 +1,3 @@
-
 public class Dispatcher extends DispatcherBase {
 
     private final PlanePriorityQueue planePriorityQueue = new PlanePriorityQueue();
@@ -16,7 +15,7 @@ public class Dispatcher extends DispatcherBase {
     @Override
     public String allocateLandingSlot(String currentTime) {
         Plane plane = planePriorityQueue.min();
-        if (plane == null || PlanePriorityQueue.getTimeDifferenceInMinutes(plane.getTime(), currentTime) > 5) {
+        if (plane == null || PlanePriorityQueue.isPlaneLate(plane.getTime(), currentTime)) {
             return null;
         }
 
@@ -189,12 +188,16 @@ class PlanePriorityQueue {
         return Integer.parseInt(time.substring(0, 2));
     }
 
-    public static int getTimeDifferenceInMinutes(String planeTime, String currentTime) {
+    public static boolean isPlaneLate(String planeTime, String currentTime) {
         int currentHour = PlanePriorityQueue.getHourFromTime(currentTime);
         int currentTimeMinutes = PlanePriorityQueue.getMinutesFromTime(currentTime);
         int planeArrivalMinutes = PlanePriorityQueue.getMinutesFromTime(planeTime);
         int planeArrivalHour = PlanePriorityQueue.getHourFromTime(planeTime);
 
-        return Math.abs(currentHour - planeArrivalHour)*60+(Math.abs(planeArrivalMinutes-currentTimeMinutes));
+        if (Math.abs(currentHour - planeArrivalHour) != 0) {
+            return false;
+        }
+
+        return Math.abs(planeArrivalMinutes - currentTimeMinutes) > 5;
     }
 }
