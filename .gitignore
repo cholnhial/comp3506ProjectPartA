@@ -9,3 +9,8 @@ out/
 /.idea/misc.xml
 /.idea/modules.xml
 /.idea/vcs.xml
+/tests/
+/.idea/libraries/junit_junit_4_13_2.xml
+/.idea/libraries/org_hamcrest_hamcrest_2_1.xml
+/.idea/uiDesigner.xml
+/lib/
