@@ -20,7 +20,7 @@ class DisplayPartiallySorted extends DisplayPartiallySortedBase {
 
     @Override
     Plane[] sort() {
-        Plane[] partiallySorted = Utils.mergeArrays(super.getSchedule(), super.getExtraPlanes());
+        Plane[] partiallySorted = Utils.mergeArrays(super.getExtraPlanes(), super.getSchedule());
         Utils.insertionSort(partiallySorted, partiallySorted.length);
         return super.getExtraPlanes();
     }
