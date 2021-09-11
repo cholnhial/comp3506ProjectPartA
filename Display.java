@@ -26,7 +26,7 @@ class DisplayPartiallySorted extends DisplayPartiallySortedBase {
         if (extraPlanes[0].compareTo(super.getSchedule()[0]) < 0) {
             fullySorted = Utils.mergeArrays(extraPlanes, super.getSchedule());
         } else {
-            fullySorted = Utils.mergeArrays(super.getSchedule(), super.getExtraPlanes());
+            fullySorted = Utils.mergeArrays(super.getSchedule(), extraPlanes);
         }
 
         return fullySorted;
