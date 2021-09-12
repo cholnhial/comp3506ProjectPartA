@@ -195,7 +195,7 @@ class PlanePriorityQueue {
         int planeArrivalHour = PlanePriorityQueue.getHourFromTime(planeTime);
 
         if(Math.abs(currentHour - planeArrivalHour) == 1 &&
-                Math.abs(currentTimeMinutes - planeArrivalMinutes) <= 5) {
+                (60 % (currentTimeMinutes + planeArrivalMinutes)) <= 5) {
             return false;
         }
 
