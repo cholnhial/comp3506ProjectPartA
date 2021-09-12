@@ -188,16 +188,16 @@ class PlanePriorityQueue {
         return Integer.parseInt(time.substring(0, 2));
     }
 
+
     public static boolean isPlaneLate(String planeTime, String currentTime) {
         int currentHour = PlanePriorityQueue.getHourFromTime(currentTime);
         int currentTimeMinutes = PlanePriorityQueue.getMinutesFromTime(currentTime);
         int planeArrivalMinutes = PlanePriorityQueue.getMinutesFromTime(planeTime);
         int planeArrivalHour = PlanePriorityQueue.getHourFromTime(planeTime);
 
-        if (Math.abs(currentHour - planeArrivalHour) != 0) {
-            return false;
-        }
+         int currentTimeInMinutes = currentHour * 60 + currentTimeMinutes;
+         int planeArrivalTimeInMinutes = planeArrivalHour * 60 + planeArrivalMinutes;
 
-        return Math.abs(planeArrivalMinutes - currentTimeMinutes) > 5;
+        return Math.abs(currentTimeInMinutes - planeArrivalTimeInMinutes) > 5;
     }
 }
